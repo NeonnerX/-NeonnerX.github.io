@@ -1,0 +1,66 @@
+/* Стили PDF-документов. Формат A4, печать фона включена в scripts/build-pdf.mjs. */
+@page { size: A4; margin: 12mm 15mm; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0; color: #16171a; background: #fff;
+  font: 400 9.6pt/1.4 'Manrope', 'Segoe UI', Arial, sans-serif;
+}
+h1, h2, h3, p, ul { margin: 0; }
+a { color: inherit; text-decoration: none; }
+b { font-weight: 700; }
+.muted { color: #62646b; }
+.small { font-size: 8.6pt; }
+.todo { background: #ffe3cc; color: #a3470e; font-weight: 700; padding: 0 3px; border-radius: 2px; }
+.nw { white-space: nowrap; }
+.sep { margin: 0 6px; color: #b5b2aa; }
+ul { padding-left: 14px; }
+li { margin: 1.5pt 0; }
+li::marker { color: #c2621c; }
+h2 {
+  font-size: 8.4pt; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #c2621c;
+  margin: 0 0 5pt; padding-bottom: 3pt; border-bottom: .6pt solid #e2dfd8;
+}
+section { margin-top: 10pt; break-inside: avoid-page; }
+
+/* ---------- Резюме ---------- */
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16pt; padding-bottom: 10pt; border-bottom: 1.4pt solid #16171a; }
+.head h1 { font-size: 21pt; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; }
+.role { margin-top: 3pt; font-size: 11pt; font-weight: 600; color: #c2621c; }
+.contacts { text-align: right; font-size: 8.8pt; max-width: 58%; }
+.job { margin-top: 8pt; break-inside: avoid; }
+.job:first-of-type { margin-top: 0; }
+.job__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
+.job h3 { font-size: 11pt; font-weight: 800; }
+.job__kind { font-weight: 500; font-size: 9.4pt; color: #62646b; }
+.job__period { font-size: 8.8pt; color: #62646b; white-space: nowrap; }
+.job__role { font-weight: 600; margin-top: 1pt; }
+.job__desc { margin-top: 1pt; }
+.job ul { margin-top: 2pt; }
+.metrics { margin-top: 3pt; }
+.stack { margin-top: 2pt; font-size: 8.8pt; }
+.note { margin-top: 2pt; font-size: 8pt; color: #62646b; }
+.skillrow { margin: 2pt 0; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18pt; }
+.cols section, .cols > div { margin: 0; }
+
+/* ---------- One-pager ---------- */
+.op-head { background: #16171a; color: #fff; border-radius: 8pt; padding: 9mm 11mm 8mm; }
+.op-head h1 { font-size: 40pt; line-height: 1; font-weight: 800; letter-spacing: -.03em; margin-top: 4pt; }
+.op-head .lead { margin-top: 8pt; font-size: 11.5pt; max-width: 150mm; color: #d8d6d0; }
+.eyebrow { font-size: 8pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #f0994f; }
+.op-grid { display: grid; grid-template-columns: 1fr 66mm; gap: 18pt; margin-top: 4pt; align-items: start; }
+.op-main p + p { margin-top: 4pt; }
+.op-side section:first-child { margin-top: 10pt; }
+.facts { width: 100%; border-collapse: collapse; font-size: 8.8pt; }
+.facts th, .facts td { text-align: left; vertical-align: top; padding: 3pt 0; border-bottom: .6pt solid #eeebe5; }
+.facts th { font-weight: 500; color: #62646b; width: 44%; padding-right: 6pt; }
+.track { background: #f6f5f2; border-radius: 6pt; padding: 9pt 10pt; }
+.track p { margin-top: 4pt; line-height: 1.25; }
+.track b { font-size: 11pt; font-weight: 800; }
+.ask { background: #f6e6d8; border-radius: 6pt; padding: 10pt 12pt; }
+.ask h2 { border-bottom-color: #ebcbb0; }
+.ask-amount { margin-top: 4pt; }
+/* Две страницы (см. __fit в print.js): колонки идут друг за другом, чтобы разрыв делил текст поровну */
+.two-pages .op-grid { display: block; }
+.two-pages .facts th { width: 28%; }
