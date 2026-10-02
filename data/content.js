@@ -1,12 +1,13 @@
 /*
- * Единый источник данных для сайта (index.html) и PDF-документов (print/*.html).
+ * Единый источник данных для сайта (index.html) и PDF-резюме (print/cv.html).
  * Правьте текст только здесь — затем `npm run pdf`, чтобы пересобрать PDF.
+ * One-pager XABAR собирается в репозитории XABAR.github.io (его content.js — источник правды), здесь только ссылки на PDF.
+ * Общие данные проекта XABAR (описание, роль, ссылки, медиа, иконка, «Ищу в команду», «Инвесторам», one-pager)
+ * подтягиваются с сайта XABAR — см. assets/js/xabar-sync.js. Здесь они — запасная копия на случай его недоступности.
  *
  * Правила:
  *  - shared  — то, что не зависит от языка (ссылки, файлы, контакты, медиа).
  *  - ru / en — тексты. Ключи в обоих языках должны совпадать.
- *  - null в полях one-pager = данные ещё не заданы: на сайте поле скрыто,
- *    в PDF выводится заметная метка [TODO], а `npm run pdf` выводит список пропусков.
  *  - url: '' у ссылки = ссылка ещё не задана: на сайте скрыта, появится после заполнения.
  */
 window.CONTENT = {
@@ -29,15 +30,17 @@ window.CONTENT = {
     },
     files: {
       cv: { ru: 'cv/Boldyrev_CV_RU.pdf', en: 'cv/Boldyrev_CV_EN.pdf' },
-      onepager: { ru: 'cv/XABAR_OnePager_RU.pdf', en: 'cv/XABAR_OnePager_EN.pdf' },
+      // One-pager собирается и публикуется сайтом XABAR (репозиторий XABAR.github.io)
+      onepager: { ru: 'https://xabargame.github.io/pdf/XABAR_OnePager_RU.pdf', en: 'https://xabargame.github.io/pdf/XABAR_OnePager_EN.pdf' },
     },
     projects: {
+      // Поля ниже перезаписываются данными сайта XABAR (assets/js/xabar-sync.js); здесь — запасная копия
       xabar: {
         icon: 'assets/img/icons/xabar.webp', // квадратное изображение, отображается кругом/плиткой 52px
         period: { from: '2026-01', to: null },
         // Ссылки: type — site | vk | telegram | steam | rustore | community | youtube
         links: [
-          { type: 'site', url: '' },     // TODO: сайт XABAR
+          { type: 'site', url: 'https://xabargame.github.io/' },
           { type: 'telegram', url: 'https://t.me/habargameofficial' },
           { type: 'vk', url: 'https://vk.ru/habargameofficial' },
         ],
@@ -227,37 +230,6 @@ window.CONTENT = {
         text: 'Моды и собственные прототипы на Unity: программирование на C#, 3D-моделирование, левел-дизайн.',
       },
     },
-    onepager: {
-      title: 'XABAR — one-pager',
-      subtitle: 'Для инвесторов и издателей',
-      headings: {
-        concept: 'Концепция', usp: 'Чем выделяется', status: 'Статус и планы', founder: 'Основатель', ask: 'Запрос', contacts: 'Контакты', facts: 'Ключевые данные', amount: 'Бюджет / формат сделки', track: 'Прошлый проект основателя',
-      },
-      concept: 'Иммерсивный шутер от первого лица в постапокалиптическом мире: одиночная кампания и сетевая игра, кроссплатформенный релиз.',
-      usp: [
-        'Одиночный режим и мультиплеер в одной игре.',
-        'Кроссплатформенность: ПК (Windows) и Android на Unity 6.',
-        'Опыт основателя в жанре: участие в мобильном фан-порте S.T.A.L.K.E.R. (SOC_D) — 100 000+ скачиваний, ТОП-2 шутеров RuStore (2025).',
-      ],
-      facts: [
-        { label: 'Жанр', value: 'FPS, иммерсивный шутер, постапокалипсис' },
-        { label: 'Режимы', value: 'Одиночная игра, мультиплеер' },
-        { label: 'Платформы', value: 'ПК (Windows), мобильные (Android)' },
-        { label: 'Движок', value: 'Unity 6' },
-        { label: 'Стадия', value: 'Разработка демо-версии, закрытые тесты' },
-        { label: 'Старт разработки', value: 'Январь 2026' },
-        { label: 'Релиз', value: 'Дата не объявлена' },
-        { label: 'Команда', value: '1 разработчик + 25 волонтёров (5 модераторов, 20 тестировщиков)' }, // все без оплаты; юрлица нет
-      ],
-      status: 'Концепция сформирована. Идёт активная разработка демо-версии игры и закрытое тестирование.', // можно дополнить ближайшими вехами с датами
-      founder: 'Юрий Болдырев — основатель XABAR, Unity-разработчик и гейм-дизайнер, 7+ лет в геймдеве. Разработчик и тимлид QA/администрации SOC_D — мобильного фан-порта S.T.A.L.K.E.R. Победитель геймджемов МТУСИ и «Ctrl + Shift + Create» (2026), предпринимательского тренинга МТУСИ (2025).',
-      ask: [
-        'Маркетинг и рекламная поддержка',
-        'Паблишинг: Steam, Google Play, VK Play, RuStore',
-      ],
-      trackNote: 'SOC_D — некоммерческий мобильный фан-порт S.T.A.L.K.E.R. (2022–2025). Роль: разработчик, тимлид QA и администрации.',
-      askAmount: 'Обсуждается индивидуально. Смета на производство и маркетинг — после выхода демо-версии и формирования команды.',
-    },
   },
 
   en: {
@@ -420,37 +392,6 @@ window.CONTENT = {
         title: 'Modding & pet projects',
         text: 'Mods and own Unity prototypes: C# programming, 3D modeling, level design.',
       },
-    },
-    onepager: {
-      title: 'XABAR — one-pager',
-      subtitle: 'For investors & publishers',
-      headings: {
-        concept: 'Concept', usp: 'What sets it apart', status: 'Status & plans', founder: 'Founder', ask: 'The ask', contacts: 'Contacts', facts: 'Key facts', amount: 'Budget / deal format', track: 'Founder’s previous project',
-      },
-      concept: 'An immersive first-person shooter in a post-apocalyptic world: single-player campaign and online multiplayer, cross-platform release.',
-      usp: [
-        'Single-player and multiplayer in one game.',
-        'Cross-platform: PC (Windows) and Android, built on Unity 6.',
-        'Founder’s genre experience: co-developed SOC_D, a mobile fan port of S.T.A.L.K.E.R. — 100K+ downloads, #2 in Shooters on RuStore (2025).',
-      ],
-      facts: [
-        { label: 'Genre', value: 'FPS, immersive shooter, post-apocalypse' },
-        { label: 'Modes', value: 'Single-player, multiplayer' },
-        { label: 'Platforms', value: 'PC (Windows), mobile (Android)' },
-        { label: 'Engine', value: 'Unity 6' },
-        { label: 'Stage', value: 'Demo in development, closed testing' },
-        { label: 'Development start', value: 'January 2026' },
-        { label: 'Release', value: 'TBA' },
-        { label: 'Team', value: '1 developer + 25 volunteers (5 moderators, 20 testers)' },
-      ],
-      status: 'The concept is finalized. The demo is in active development, with closed testing underway.',
-      founder: 'Yuri Boldyrev — founder of XABAR, Unity developer and game designer, 7+ years in game development. Developer and QA/administration lead of SOC_D, a mobile fan port of S.T.A.L.K.E.R. Winner of the MTUCI and “Ctrl + Shift + Create” game jams (2026) and the MTUCI entrepreneurship training (2025).',
-      ask: [
-        'Marketing and advertising support',
-        'Publishing: Steam, Google Play, VK Play, RuStore',
-      ],
-      trackNote: 'SOC_D — a non-commercial mobile fan port of S.T.A.L.K.E.R. (2022–2025). Role: developer, QA and administration lead.',
-      askAmount: 'Discussed individually. A production and marketing budget will follow the demo and team formation.',
     },
   },
 };

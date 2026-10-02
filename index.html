@@ -73,7 +73,11 @@
 
   <noscript><p class="wrap">Для отображения сайта включите JavaScript. / Please enable JavaScript.</p></noscript>
 
+  <!-- Данные XABAR — с сайта XABAR (см. assets/js/xabar-sync.js); при недоступности остаются локальные -->
+  <script src="https://xabargame.github.io/data/content.js"></script>
+  <script>window.XABAR_CONTENT = window.CONTENT; window.CONTENT = undefined;</script>
   <script src="data/content.js"></script>
+  <script src="assets/js/xabar-sync.js"></script>
   <script src="assets/js/tool-icons.js"></script>
   <script src="assets/js/app.js"></script>
   <script>

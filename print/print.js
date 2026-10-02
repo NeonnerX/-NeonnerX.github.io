@@ -1,7 +1,6 @@
 /*
- * Рендер PDF-документов (резюме и one-pager) из window.CONTENT.
- * Документ выбирается атрибутом <body data-doc="cv|onepager">, язык — параметром ?lang=ru|en.
- * Незаполненные поля (null) выводятся как [TODO] и собираются в window.__TODOS для scripts/build-pdf.mjs.
+ * Рендер PDF-резюме из window.CONTENT. Язык — параметром ?lang=ru|en.
+ * One-pager XABAR собирается в репозитории XABAR.github.io.
  */
 (function () {
   'use strict';
@@ -15,13 +14,6 @@
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-  function val(v, what) {
-    if (v == null || v === '') {
-      window.__TODOS.push(what);
-      return '<span class="todo">[TODO]</span>';
-    }
-    return esc(v);
   }
   function fmtMonth(ym) {
     if (!ym) return T.ui.present;
@@ -92,46 +84,9 @@
       '</section>';
   }
 
-  // ---------- One-pager ----------
-  function renderOnepager() {
-    var O = T.onepager, H = O.headings;
-    var facts = '<table class="facts">' + O.facts.map(function (f) {
-      return '<tr><th>' + esc(f.label) + '</th><td>' + val(f.value, 'onepager.facts: ' + f.label) + '</td></tr>';
-    }).join('') + '</table>';
-    var ask = list(O.ask) + (O.askAmount !== undefined
-      ? '<p class="ask-amount"><b>' + esc(H.amount) + ':</b> ' + val(O.askAmount, 'onepager.askAmount') + '</p>' : '');
-    var roles = T.collab.team.roles.map(function (r) { return esc(r.name); }).join(', ');
-
-    return '' +
-      '<header class="op-head">' +
-        '<p class="eyebrow">' + esc(O.subtitle) + '</p>' +
-        '<h1>XABAR</h1>' +
-        '<p class="lead">' + esc(O.concept) + '</p>' +
-      '</header>' +
-      '<div class="op-grid">' +
-        '<div class="op-main">' +
-          '<section>' + h(H.usp) + list(O.usp) + '</section>' +
-          '<section>' + h(H.status) + '<p>' + val(O.status, 'onepager.status') + '</p></section>' +
-          '<section>' + h(H.founder) + '<p>' + esc(O.founder) + '</p>' +
-            '<p class="muted small">' + esc(T.ui.lookingFor) + ': ' + roles + '.</p></section>' +
-          '<section class="ask">' + h(H.ask) + ask + '</section>' +
-          '<section>' + h(H.contacts) + '<p>' + contactsLine() + '</p></section>' +
-        '</div>' +
-        '<aside class="op-side">' +
-          '<section>' + h(H.facts) + facts + '</section>' +
-          '<section class="track">' + '<p class="eyebrow">' + esc(H.track) + '</p>' +
-            '<p class="small">' + esc(O.trackNote) + '</p>' +
-            T.projects.socd.metrics.map(function (m) { return '<p><b>' + esc(m.value) + '</b> <span class="muted">' + esc(m.label) + '</span></p>'; }).join('') +
-            '<p class="muted small">' + esc(T.projects.socd.note) + '</p>' +
-          '</section>' +
-        '</aside>' +
-      '</div>';
-  }
-
   document.documentElement.lang = lang;
-  var doc = document.body.getAttribute('data-doc');
-  document.title = doc === 'cv' ? T.person.name + ' — ' + T.cv.title : T.onepager.title;
-  document.getElementById('doc').innerHTML = doc === 'cv' ? renderCv() : renderOnepager();
+  document.title = T.person.name + ' — ' + T.cv.title;
+  document.getElementById('doc').innerHTML = renderCv();
 
   // ---------- Подгонка под страницы A4 ----------
   // Вызывается из scripts/build-pdf.mjs в print-режиме при ширине области печати; pageH — высота области печати, px.

@@ -298,12 +298,13 @@ button { font: inherit; color: inherit; }
 .lightbox__btn {
   position: absolute; width: 53px; height: 53px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .25);
   background: rgba(255, 255, 255, .06); color: #fff; font-size: 26px; cursor: pointer; display: grid; place-items: center;
+  z-index: 1; touch-action: manipulation; -webkit-tap-highlight-color: transparent; /* без задержки и «съеденных» тапов (double-tap zoom) */
 }
 .lightbox__btn:hover { background: rgba(255, 255, 255, .16); }
 .lightbox__close { top: 24px; right: 24px; font-size: 19px; }
 .lightbox__prev { left: 24px; top: 50%; transform: translateY(-50%); }
 .lightbox__next { right: 24px; top: 50%; transform: translateY(-50%); }
-.lightbox__count { position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 14px; opacity: .7; }
+.lightbox__count { position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 14px; opacity: .7; pointer-events: none; } /* на телефоне лежит поверх стрелок — не перехватывает нажатия */
 
 /* ---------- Появление ---------- */
 .reveal { opacity: 0; transform: translateY(19px); transition: opacity .6s ease, transform .6s ease; }

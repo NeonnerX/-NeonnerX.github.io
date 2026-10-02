@@ -1,4 +1,5 @@
-// Сборка PDF (резюме и one-pager, RU/EN) из print/*.html через headless-браузер.
+// Сборка PDF-резюме (RU/EN) из print/cv.html через headless-браузер.
+// One-pager XABAR собирается в репозитории XABAR.github.io.
 // Локально используется установленный Microsoft Edge; в CI — PDF_BROWSER=chromium.
 import { chromium } from 'playwright';
 import { readFileSync, mkdirSync } from 'node:fs';
@@ -13,11 +14,7 @@ const sandbox = { window: {} };
 vm.runInNewContext(readFileSync(resolve(ROOT, 'data/content.js'), 'utf8'), sandbox);
 const { files } = sandbox.window.CONTENT.shared;
 
-const jobs = [];
-for (const lang of ['ru', 'en']) {
-  jobs.push({ tpl: 'print/cv.html', lang, out: files.cv[lang] });
-  jobs.push({ tpl: 'print/onepager.html', lang, out: files.onepager[lang] });
-}
+const jobs = ['ru', 'en'].map((lang) => ({ tpl: 'print/cv.html', lang, out: files.cv[lang] }));
 
 const channel = process.env.PDF_BROWSER === 'chromium' ? undefined : (process.env.PDF_BROWSER || 'msedge');
 const browser = await chromium.launch(channel ? { channel } : {});
